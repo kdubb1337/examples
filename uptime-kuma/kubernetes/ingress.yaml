@@ -8,6 +8,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
+    # Edit this to a domain you control
     - host: uptime.yourdomain.com
       http:
         paths:
