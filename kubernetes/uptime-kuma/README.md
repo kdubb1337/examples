@@ -1,5 +1,7 @@
 # Uptime Kuma Kubernetes w/ Ansible
 
+🧠 See the corresponding article for more details about using [Kubernetes w/ Ansible](www.erichreich.com/using-kubernetes-without-ansible-is-just-wrong/)
+
 ## Pre-Requisites
 
 - Change `pv.yaml` to point to a usable storage in your cluster.
