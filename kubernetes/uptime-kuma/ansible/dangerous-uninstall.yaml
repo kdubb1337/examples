@@ -5,7 +5,7 @@
   collections:
     - kubernetes.core
   vars:
-    - namespace: uptime-kuma2
+    - namespace: uptime-kuma
   tasks:
     - name: (uptime-kuma) Remove storage volume
       kubernetes.core.k8s:

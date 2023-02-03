@@ -2,7 +2,7 @@
   collections:
     - kubernetes.core
   vars:
-    - namespace: uptime-kuma2
+    - namespace: uptime-kuma
   tasks:
     - name: (uptime-kuma) Remove Basic Auth
       kubernetes.core.k8s:
