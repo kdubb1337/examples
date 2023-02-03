@@ -1,0 +1,36 @@
+- hosts: localhost
+  collections:
+    - kubernetes.core
+  vars:
+    - namespace: uptime-kuma2
+  tasks:
+    - name: (uptime-kuma) Remove Basic Auth
+      kubernetes.core.k8s:
+        state: absent
+        kind: Secret
+        namespace: '{{ namespace }}'
+        name: basic-auth-secret
+
+    - name: (uptime-kuma) Undeploy ingress
+      kubernetes.core.k8s:
+        state: absent
+        namespace: '{{ namespace }}'
+        src: ../ingress.yaml
+
+    - name: (uptime-kuma) Undeploy service
+      kubernetes.core.k8s:
+        state: absent
+        namespace: '{{ namespace }}'
+        src: ../service.yaml
+
+    - name: (uptime-kuma) Deployment
+      kubernetes.core.k8s:
+        state: absent
+        namespace: '{{ namespace }}'
+        src: ../deployment.yaml
+
+    - name: (uptime-kuma) Remove storage claim
+      kubernetes.core.k8s:
+        state: absent
+        namespace: '{{ namespace }}'
+        src: ../pvc.yaml

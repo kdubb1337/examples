@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: uptime-kuma
+  labels:
+    app: uptime-kuma
+spec:
+  type: NodePort
+  ports:
+    # Maps the container's port to 80. If you want to use it on a different port, change it here.
+    - port: 80
+      targetPort: 3001
+      protocol: TCP
+  selector:
+    app: uptime-kuma

@@ -1,0 +1,55 @@
+- hosts: localhost
+  collections:
+    - kubernetes.core
+  vars:
+    - namespace: uptime-kuma2
+  tasks:
+    - name: (uptime-kuma) Create namespace
+      kubernetes.core.k8s:
+        name: '{{ namespace }}'
+        api_version: v1
+        kind: Namespace
+        state: present
+
+    - name: (uptime-kuma) Add Basic Auth
+      k8s:
+        definition:
+          api_version: v1
+          kind: Secret
+          metadata:
+            namespace: '{{ namespace }}'
+            name: basic-auth-secret
+          state: present
+          type: Opaque
+          data:
+            auth: "{{ lookup('ansible.builtin.template', '../auth') | b64encode }}"
+
+    - name: (uptime-kuma) Create storage volume
+      kubernetes.core.k8s:
+        state: present
+        namespace: '{{ namespace }}'
+        src: ../pv.yaml
+
+    - name: (uptime-kuma) Attach storage volume
+      kubernetes.core.k8s:
+        state: present
+        namespace: '{{ namespace }}'
+        src: ../pvc.yaml
+
+    - name: (uptime-kuma) Deploy ingress
+      kubernetes.core.k8s:
+        state: present
+        namespace: '{{ namespace }}'
+        src: ../ingress.yaml
+
+    - name: (uptime-kuma) Deploy service
+      kubernetes.core.k8s:
+        state: present
+        namespace: '{{ namespace }}'
+        src: ../service.yaml
+
+    - name: (uptime-kuma) Deployment
+      kubernetes.core.k8s:
+        state: present
+        namespace: '{{ namespace }}'
+        src: ../deployment.yaml

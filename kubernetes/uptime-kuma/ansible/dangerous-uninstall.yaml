@@ -1,0 +1,21 @@
+# Ensure the uninstall has been run first
+- import_playbook: uninstall.yaml
+
+- hosts: localhost
+  collections:
+    - kubernetes.core
+  vars:
+    - namespace: uptime-kuma2
+  tasks:
+    - name: (uptime-kuma) Remove storage volume
+      kubernetes.core.k8s:
+        state: absent
+        namespace: '{{ namespace }}'
+        src: ../pv.yaml
+
+    - name: (uptime-kuma) Delete namespace
+      kubernetes.core.k8s:
+        name: '{{ namespace }}'
+        api_version: v1
+        kind: Namespace
+        state: absent

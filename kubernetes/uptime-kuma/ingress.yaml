@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: uptime-kuma
+  annotations:
+    # This example is for nginx, if you are using something else, you need to change this file
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    # Edit this to a domain you control
+    - host: uptime.yourdomain.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: uptime-kuma
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix

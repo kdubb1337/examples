@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uptime-kuma
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uptime-kuma
+  template:
+    metadata:
+      labels:
+        app: uptime-kuma
+    spec:
+      # Mount the PVC
+      volumes:
+        - name: data-mount
+          persistentVolumeClaim:
+            claimName: uptime-data-claim
+      containers:
+        - name: uptime-kuma
+          image: louislam/uptime-kuma:latest
+          # expose the container's port
+          ports:
+            - containerPort: 3001
+          # Pass the mount into the container
+          volumeMounts:
+            - mountPath: '/app/data'
+              name: data-mount
+          # optional but recommended to set usage limits
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 250m
+              memory: 128Mi
+          imagePullPolicy: IfNotPresent
