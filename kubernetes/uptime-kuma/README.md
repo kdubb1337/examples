@@ -26,7 +26,7 @@ To uninstall run:
 ansible-playbook kubernetes/uptime-kuma/ansible/uninstall.yaml
 ```
 
-To uninstal everything, including the data, run:
+To uninstall everything, including the data, run:
 
 ```bash
 ansible-playbook kubernetes/uptime-kuma/ansible/dangerous-uninstall.yaml
