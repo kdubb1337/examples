@@ -1,6 +1,6 @@
 # Homepage Kubernetes Setup
 
-🧠 See the corresponding article for more details about using [Homepage](www.erichreich.com/your-new-homepage/)
+🧠 See the corresponding article for more details about using [Homepage](https://www.erichreich.com/your-new-homepage/)
 
 ## Pre-Requisites
 
@@ -30,7 +30,7 @@ To uninstall run:
 
 ```bash
 ansible-playbook kubernetes/homepage/ansible/uninstall.yaml
-````
+```
 
 To uninstall everything, including the data, run:
 

@@ -1,6 +1,6 @@
 # Uptime Kuma Kubernetes w/ Ansible
 
-🧠 See the corresponding article for more details about using [Kubernetes w/ Ansible](www.erichreich.com/using-kubernetes-without-ansible-is-just-wrong/)
+🧠 See the corresponding article for more details about using [Kubernetes w/ Ansible](https://www.erichreich.com/using-kubernetes-without-ansible-is-just-wrong/)
 
 ## Pre-Requisites
 
