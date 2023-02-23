@@ -1,0 +1,50 @@
+- hosts: localhost
+  collections:
+    - kubernetes.core
+  vars:
+    - namespace: homepage
+  tasks:
+    - name: (homepage) Create namespace
+      kubernetes.core.k8s:
+        name: '{{ namespace }}'
+        api_version: v1
+        kind: Namespace
+        state: present
+
+    - name: (homepage) Deploy Ingress
+      kubernetes.core.k8s:
+        state: present
+        namespace: '{{ namespace }}'
+        src: ../ingress.yaml
+
+    # Optional: Remove this section if you don't want basic auth
+    - name: (homepage) Add Basic Auth
+      k8s:
+        definition:
+          api_version: v1
+          kind: Secret
+          metadata:
+            namespace: '{{ namespace }}'
+            name: basic-auth-secret
+          state: present
+          type: Opaque
+          data:
+            auth: "{{ lookup('ansible.builtin.template', '../auth') | b64encode }}"
+
+    - name: (homepage) Attach storage volume
+      kubernetes.core.k8s:
+        state: present
+        namespace: '{{ namespace }}'
+        src: ../pv0.yaml
+
+    - name: (homepage) Deploy Service
+      kubernetes.core.k8s:
+        state: present
+        namespace: '{{ namespace }}'
+        src: ../service.yaml
+
+    - name: (homepage) Deployment
+      kubernetes.core.k8s:
+        state: present
+        namespace: '{{ namespace }}'
+        src: ../deployment.yaml

@@ -1,0 +1,31 @@
+- hosts: localhost
+  collections:
+    - kubernetes.core
+  vars:
+    - namespace: homepage
+  tasks:
+    - name: (homepage) Deployment
+      kubernetes.core.k8s:
+        state: absent
+        namespace: '{{ namespace }}'
+        src: ../deployment.yaml
+
+    - name: (homepage) Deploy Ingress
+      kubernetes.core.k8s:
+        state: absent
+        namespace: '{{ namespace }}'
+        src: ../ingress.yaml
+
+    - name: (homepage) Deploy Service
+      kubernetes.core.k8s:
+        state: absent
+        namespace: '{{ namespace }}'
+        src: ../service.yaml
+
+    # Optional: Remove this section if you don't want basic auth
+    - name: (homepage) Remove Basic Auth
+      kubernetes.core.k8s:
+        state: absent
+        kind: Secret
+        namespace: '{{ namespace }}'
+        name: basic-auth-secret

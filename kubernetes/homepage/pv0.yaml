@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: homepage-pv0
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: homepage-disk0
+  hostPath:
+    path: '/your/local/folder' # Change this to a real value
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: homepage-pvc0
+spec:
+  storageClassName: homepage-disk0
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi

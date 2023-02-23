@@ -1,0 +1,17 @@
+- hosts: localhost
+  collections:
+    - kubernetes.core
+  vars:
+    - namespace: homepage
+  tasks:
+    - name: (homepage) Remove current Deployment
+      kubernetes.core.k8s:
+        state: absent
+        namespace: '{{ namespace }}'
+        src: ../deployment.yaml
+
+    - name: (homepage) Add new Deployment
+      kubernetes.core.k8s:
+        state: present
+        namespace: '{{ namespace }}'
+        src: ../deployment.yaml
