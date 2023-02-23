@@ -22,8 +22,9 @@ ansible-playbook kubernetes/homepage/ansible/install.yaml
 
 To upgrade:
 
-````bash
+```bash
 ansible-playbook kubernetes/homepage/ansible/upgrade.yaml
+```
 
 To uninstall run:
 
